@@ -41,7 +41,7 @@ import {
 
 const Calculator = () => {
   const { featureData, isLoading, error } = useEVData();
-  
+
   const [selectedState, setSelectedState] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<string>("");
   const [vehicleClass, setVehicleClass] = useState<"2W" | "3W" | "4W">("4W");
@@ -107,7 +107,7 @@ const Calculator = () => {
     const evFuelCost = currentVehicleData.evCostPerKm * totalKm;
     const evMaintenanceCost = currentVehicleData.evMaintenanceCost * totalKm;
     const evTCO = prices.ev + evFuelCost + evMaintenanceCost;
-    
+
     // ICE Calculations
     const iceFuelCost = currentVehicleData.iceCostPerKm * totalKm;
     const iceMaintenanceCost = currentVehicleData.iceMaintenanceCost * totalKm;
@@ -124,11 +124,11 @@ const Calculator = () => {
     const tcoOverTime = [];
     for (let year = 0; year <= ownershipYears; year++) {
       const yearKm = annualKm * year;
-      const evYearTCO = prices.ev + 
-        currentVehicleData.evCostPerKm * yearKm + 
+      const evYearTCO = prices.ev +
+        currentVehicleData.evCostPerKm * yearKm +
         currentVehicleData.evMaintenanceCost * yearKm;
-      const iceYearTCO = prices.ice + 
-        currentVehicleData.iceCostPerKm * yearKm + 
+      const iceYearTCO = prices.ice +
+        currentVehicleData.iceCostPerKm * yearKm +
         currentVehicleData.iceMaintenanceCost * yearKm;
       tcoOverTime.push({
         year,
@@ -179,7 +179,7 @@ const Calculator = () => {
       tcoOverTime,
       costBreakdownData,
       evRecommended: evTCO < iceTCO,
-      costAdvantage: currentVehicleData.costAdvantage,
+      costAdvantage: (iceTCO - evTCO) / totalKm,
     };
   }, [currentVehicleData, dailyKm, ownershipYears, vehicleClass]);
 
@@ -318,7 +318,7 @@ const Calculator = () => {
                   </Badge>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  {comparison.costAdvantage > 0 
+                  {comparison.costAdvantage > 0
                     ? "EV is more economical in this location"
                     : "ICE is currently more economical here"}
                 </p>
@@ -515,7 +515,7 @@ const Calculator = () => {
                     <li className="flex items-start gap-2">
                       <span className="text-ev">•</span>
                       <span>
-                        {comparison.evRecommended 
+                        {comparison.evRecommended
                           ? `EV offers ₹${(comparison.savings / 100000).toFixed(1)}L savings over ${ownershipYears} years`
                           : `ICE is currently more economical by ₹${(Math.abs(comparison.savings) / 100000).toFixed(1)}L`}
                       </span>

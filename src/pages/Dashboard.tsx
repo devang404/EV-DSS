@@ -15,6 +15,7 @@ import {
   BarChart3,
   Activity,
   Loader2,
+  Info
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
@@ -90,7 +91,7 @@ const Dashboard = () => {
     const evBasePrice = 1500000;
     const iceBasePrice = 1000000;
     const annualKm = 15000;
-    
+
     return Array.from({ length: 9 }, (_, year) => ({
       year,
       ev: Math.round(evBasePrice + (mumbai4WData.evCostPerKm + mumbai4WData.evMaintenanceCost) * annualKm * year),
@@ -178,25 +179,25 @@ const Dashboard = () => {
           title="Electric Vehicle (4W)"
           recommended={true}
           metrics={[
-            { 
-              label: "Running Cost", 
-              value: `₹${(mumbai4WData?.evCostPerKm || 0).toFixed(2)}/km`, 
-              subValue: `vs ₹${(mumbai4WData?.iceCostPerKm || 0).toFixed(2)}/km ICE` 
+            {
+              label: "Running Cost",
+              value: `₹${(mumbai4WData?.evCostPerKm || 0).toFixed(2)}/km`,
+              subValue: `vs ₹${(mumbai4WData?.iceCostPerKm || 0).toFixed(2)}/km ICE`
             },
-            { 
-              label: "CO₂ Emissions", 
-              value: `${Math.round((mumbai4WData?.evCo2PerKm || 0) * 1000)} g/km`, 
-              subValue: "Grid average" 
+            {
+              label: "CO₂ Emissions",
+              value: `${Math.round((mumbai4WData?.evCo2PerKm || 0) * 1000)} g/km`,
+              subValue: "Grid average"
             },
-            { 
-              label: "Maintenance", 
-              value: `₹${(mumbai4WData?.evMaintenanceCost || 0).toFixed(2)}/km`, 
-              subValue: `${Math.round(((mumbai4WData?.iceMaintenanceCost || 1) - (mumbai4WData?.evMaintenanceCost || 0)) / (mumbai4WData?.iceMaintenanceCost || 1) * 100)}% lower` 
+            {
+              label: "Maintenance",
+              value: `₹${(mumbai4WData?.evMaintenanceCost || 0).toFixed(2)}/km`,
+              subValue: `${Math.round(((mumbai4WData?.iceMaintenanceCost || 1) - (mumbai4WData?.evMaintenanceCost || 0)) / (mumbai4WData?.iceMaintenanceCost || 1) * 100)}% lower`
             },
-            { 
-              label: "Cost Advantage", 
-              value: `₹${(mumbai4WData?.costAdvantage || 0).toFixed(2)}/km`, 
-              subValue: "Savings vs ICE" 
+            {
+              label: "Cost Advantage",
+              value: `₹${(mumbai4WData?.costAdvantage || 0).toFixed(2)}/km`,
+              subValue: "Savings vs ICE"
             },
           ]}
         />
@@ -204,25 +205,25 @@ const Dashboard = () => {
           type="ice"
           title="ICE Vehicle (4W)"
           metrics={[
-            { 
-              label: "Running Cost", 
-              value: `₹${(mumbai4WData?.iceCostPerKm || 0).toFixed(2)}/km`, 
-              subValue: "Petrol @ ₹104/L" 
+            {
+              label: "Running Cost",
+              value: `₹${(mumbai4WData?.iceCostPerKm || 0).toFixed(2)}/km`,
+              subValue: "Petrol @ ₹104/L"
             },
-            { 
-              label: "CO₂ Emissions", 
-              value: `${Math.round((mumbai4WData?.iceCo2PerKm || 0) * 1000)} g/km`, 
-              subValue: "Tailpipe emissions" 
+            {
+              label: "CO₂ Emissions",
+              value: `${Math.round((mumbai4WData?.iceCo2PerKm || 0) * 1000)} g/km`,
+              subValue: "Tailpipe emissions"
             },
-            { 
-              label: "Maintenance", 
-              value: `₹${(mumbai4WData?.iceMaintenanceCost || 0).toFixed(2)}/km`, 
-              subValue: "Regular servicing" 
+            {
+              label: "Maintenance",
+              value: `₹${(mumbai4WData?.iceMaintenanceCost || 0).toFixed(2)}/km`,
+              subValue: "Regular servicing"
             },
-            { 
-              label: "Replacement Cost", 
-              value: `₹${((mumbai4WData?.iceReplacementCost || 0) / 1000).toFixed(0)}K`, 
-              subValue: `Every ${mumbai4WData?.iceReplacementCycle || 0} years` 
+            {
+              label: "Replacement Cost",
+              value: `₹${((mumbai4WData?.iceReplacementCost || 0) / 1000).toFixed(0)}K`,
+              subValue: `Every ${mumbai4WData?.iceReplacementCycle || 0} years`
             },
           ]}
         />
@@ -417,11 +418,11 @@ const Dashboard = () => {
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
-            <Link to="/architecture" className="block">
+            <Link to="/about" className="block">
               <Button variant="outline" className="w-full justify-between">
                 <span className="flex items-center gap-2">
-                  <Zap className="h-4 w-4" />
-                  View Architecture
+                  <Info className="h-4 w-4" />
+                  About Project
                 </span>
                 <ArrowRight className="h-4 w-4" />
               </Button>

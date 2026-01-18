@@ -27,7 +27,8 @@ import {
     FileText,
     Users,
     Award,
-    UserCheck
+    UserCheck,
+    Github
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -53,7 +54,7 @@ const teamMembers = [
         role: "System Architect Developer",
         email: "nadkarnidevang@example.com", // Placeholder
         linkedin: "www.linkedin.com/in/devang-nadkarni-79066a319", // Placeholder
-        contribution: "Full stack development, System Architecture design, ML Model integration, and Deployment pipeline.",
+        contribution: "System Architecture design, ML Model integration, and Deployment pipeline.",
 
     },
     {
@@ -67,8 +68,8 @@ const teamMembers = [
     {
         name: "Chaitanya Naik",
         role: "Frontend Developer / UI/UX",
-        email: "chaitanya_naik_aids@moderncoe.edu.in",
-        linkedin: "linkedin.com/in/chaitanya-naik-82b44a2b8",
+        email: "chaitanyanaik2812@gmail.com",
+        linkedin: "https://www.linkedin.com/in/chaitanya-naik-82b44a2b8?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
         contribution: "UI Design, Dashboard implementation, and User Experience optimization.",
 
     },
@@ -76,7 +77,7 @@ const teamMembers = [
         name: "Manav Konde",
         role: "Research & Documentation",
         email: "manavkonde01@gmail.com",
-        linkedin: "linkedin.com/in/manav-konde-9b23242b1",
+        linkedin: "https://www.linkedin.com/in/manav-konde-9b23242b1?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
         contribution: "Market research, Literature review, and Requirement analysis.",
 
     }
@@ -187,6 +188,7 @@ const About = () => {
                     <TabsTrigger value="overview" className="gap-2"><FileText className="h-4 w-4" /> Overview</TabsTrigger>
                     <TabsTrigger value="architecture" className="gap-2"><Layers className="h-4 w-4" /> Architecture</TabsTrigger>
                     <TabsTrigger value="team" className="gap-2"><Users className="h-4 w-4" /> Team</TabsTrigger>
+                    <TabsTrigger value="repo" className="gap-2"><Github className="h-4 w-4" /> Repo</TabsTrigger>
                 </TabsList>
 
                 {/* --- OVERVIEW TAB --- */}
@@ -477,8 +479,43 @@ const About = () => {
                         ))}
                     </div>
                 </TabsContent>
+
+
+                {/* --- REPO TAB --- */}
+                <TabsContent value="repo">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="flex items-center gap-2">
+                                <Github className="h-5 w-5" />
+                                Project Repository
+                            </CardTitle>
+                            <CardDescription>
+                                Access the source code, documentation, and contribution history.
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                            <div className="rounded-lg border bg-muted p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+                                <div className="space-y-1">
+                                    <h3 className="font-medium text-lg">devang404 / EV-DSS</h3>
+                                    <p className="text-sm text-muted-foreground">
+                                        Electric Vehicle Decision Support System - React, Vite, Supabase
+                                    </p>
+                                </div>
+                                <a
+                                    href="https://github.com/devang404/EV-DSS"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+                                >
+                                    <Github className="mr-2 h-4 w-4" />
+                                    View on GitHub
+                                </a>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </TabsContent>
             </Tabs>
-        </MainLayout>
+        </MainLayout >
     );
 };
 
