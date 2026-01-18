@@ -7,7 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import Calculator from "./pages/Calculator";
 import CityAnalysis from "./pages/CityAnalysis";
 import Scenarios from "./pages/Scenarios";
-import Architecture from "./pages/Architecture";
+import About from "./pages/About";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -24,7 +24,7 @@ const App = () => (
           <Route path="/calculator" element={<Calculator />} />
           <Route path="/city-analysis" element={<CityAnalysis />} />
           <Route path="/scenarios" element={<Scenarios />} />
-          <Route path="/architecture" element={<Architecture />} />
+          <Route path="/about" element={<About />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

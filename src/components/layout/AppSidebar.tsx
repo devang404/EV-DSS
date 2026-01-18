@@ -11,6 +11,7 @@ import {
   User,
   LogOut,
   LogIn,
+  Info
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -22,7 +23,7 @@ const navigation = [
   { name: "EV vs ICE Calculator", href: "/calculator", icon: Calculator },
   { name: "City Analysis", href: "/city-analysis", icon: MapPin },
   { name: "What-If Scenarios", href: "/scenarios", icon: GitBranch },
-  { name: "System Architecture", href: "/architecture", icon: Layers },
+  { name: "About Project", href: "/about", icon: Info },
 ];
 
 export function AppSidebar() {
