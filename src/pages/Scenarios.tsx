@@ -458,7 +458,7 @@ const Scenarios = () => {
                 <BarChart data={sensitivityData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
                   <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
                   <XAxis dataKey="petrolPrice" label={{ value: "Petrol Price (₹/L)", position: "insideBottom", offset: -5 }} />
-                  <YAxis yAxisId="left" label={{ value: "Savings (₹L)", angle: -90, position: "insideLeft" }} />
+                  <YAxis yAxisId="left" label={{ value: "Savings (₹L)", angle: -90, position: "insideLeft", style: { fill: 'hsl(142, 71%, 45%)' } }} />
                   <YAxis yAxisId="right" orientation="right" label={{ value: "Break-even (yrs)", angle: 90, position: "insideRight" }} />
                   <Tooltip
                     contentStyle={{
@@ -469,7 +469,7 @@ const Scenarios = () => {
                   />
                   <Bar yAxisId="left" dataKey="savings" name="Savings (₹L)" fill="hsl(142, 71%, 45%)" radius={[4, 4, 0, 0]} />
                   <Line yAxisId="right" type="monotone" dataKey="breakEven" name="Break-even (yrs)" stroke="hsl(217, 91%, 60%)" strokeWidth={2} />
-                  <Legend verticalAlign="bottom" height={36} />
+
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
