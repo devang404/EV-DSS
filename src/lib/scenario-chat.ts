@@ -24,36 +24,30 @@ export const generateScenarioResponse = (query: string, ctx: ScenarioContext): s
         return "I am a professional EV Decision Support Advisor. I am here to help you analyze economic and environmental data. Please ask questions related to your vehicle scenario.";
     }
 
-    // 1. Handling "What If" / Hypotheticals (The DSS Boundary)
-    // The bot cannot change the state, so it must guide the user to the UI.
-    if (
-        lowerQuery.includes("what if") ||
-        lowerQuery.includes("change") ||
-        lowerQuery.includes("set") ||
-        lowerQuery.includes("hypothetical") ||
-        lowerQuery.includes("rate is") ||
-        lowerQuery.includes("price is")
-    ) {
+    // 1. Handling "What If" / Hypotheticals
+    // Matches: "what if", "change rate", "set price", "rate is", "price is", "hypothetical"
+    if (/(what if|change|set|hypothetical|rate is|price is|electricity is|petrol is)/i.test(lowerQuery)) {
         return `🛠️ **Scenario Adjustment**\n\nI analyze the *current* settings on your screen. I cannot change them for you.\n\n👉 **Action:** Please adjust the sliders on the dashboard (left side) to test this new value. I will instantly update my analysis based on your new input!`;
     }
 
-    // 2. Economic / Decision Impact (Expanded Keywords)
-    if (
-        lowerQuery.includes("should") ||
-        lowerQuery.includes("switch") ||
-        lowerQuery.includes("buy") ||
-        lowerQuery.includes("better") ||
-        lowerQuery.includes("worth") ||
-        lowerQuery.includes("decision") ||
-        lowerQuery.includes("affect") ||
-        lowerQuery.includes("cost") ||
-        lowerQuery.includes("money") ||
-        lowerQuery.includes("save")
-    ) {
+    // 2. Break-even / Economical Timing (Prioritized over generic 'money')
+    // Matches: "break even", "break-even", "how long", "time to recover", "years", "payback"
+    if (/(break\s*even|how long|time|year|recover|payback)/i.test(lowerQuery)) {
+        return `⏱️ **Break-even Analysis**\n\nThe "Break-even Point" is when your fuel savings equal the extra cost of buying the EV.\n\n• **Your Point:** **${ctx.breakEven} years**.\n• **Context:** If you plan to keep the vehicle longer than ${ctx.breakEven} years, you will profit. If you sell before then, the ICE was cheaper.`;
+    }
+
+    // 3. Environmental Impact
+    // Matches: "environment", "planet", "nature", "green", "co2", "emission", "clean", "pollution", "carbon"
+    if (/(environment|planet|nature|green|co2|emission|clean|pollution|carbon)/i.test(lowerQuery)) {
+        return `🌱 **Environmental Audit**\n\n• **Lifetime CO₂ Saved:** ${ctx.co2Savings?.toLocaleString()} kg\n• **Grid Reality:** Indian grid intensity is ~${ctx.gridCO2Factor} gCO₂/kWh.\n\n**Verdict:** Even with coal-based power, EVs are cleaner because electric motors are ~85-90% efficient vs ICE engines which are only ~20-30% efficient.`;
+    }
+
+    // 4. Economic / Decision Impact
+    // Matches: "should", "switch", "buy", "better", "worth", "decision", "affect", "cost", "money", "save", "financial", "wallet"
+    if (/(should|switch|buy|better|worth|decision|affect|cost|money|save|financial|wallet|cheaper|expensive)/i.test(lowerQuery)) {
         const savings = ctx.savings || 0;
         const isPositive = savings > 0;
 
-        // Detailed Reliance Logic
         if (isPositive) {
             return `✅ **Recommendation: Switch to EV**\n\n**Reliability Score: High**\nBased on your inputs (driving ${ctx.petrolPrice} ₹/L vs ${ctx.electricityRate} ₹/kWh), the EV is the clear financial winner.\n\n• **Net Benefit:** You save **₹${Math.abs(savings).toLocaleString('en-IN')}**.\n• **Why:** The high running cost of petrol outweighs the initial EV premium within ${ctx.breakEven} years.`;
         } else {
@@ -61,36 +55,12 @@ export const generateScenarioResponse = (query: string, ctx: ScenarioContext): s
         }
     }
 
-    // 3. Break-even / Economical Timing
-    if (
-        lowerQuery.includes("break") ||
-        lowerQuery.includes("even") ||
-        lowerQuery.includes("long") ||
-        lowerQuery.includes("time") ||
-        lowerQuery.includes("year") ||
-        lowerQuery.includes("recover")
-    ) {
-        return `⏱️ **Break-even Analysis**\n\nThe "Break-even Point" is when your fuel savings equal the extra cost of buying the EV.\n\n• **Your Point:** **${ctx.breakEven} years**.\n• **Context:** If you plan to keep the vehicle longer than ${ctx.breakEven} years, you will profit. If you sell before then, the ICE was cheaper.`;
-    }
-
-    // 4. Environmental Impact
-    if (
-        lowerQuery.includes("environment") ||
-        lowerQuery.includes("nature") ||
-        lowerQuery.includes("green") ||
-        lowerQuery.includes("co2") ||
-        lowerQuery.includes("emission") ||
-        lowerQuery.includes("clean")
-    ) {
-        return `🌱 **Environmental Audit**\n\n• **Lifetime CO₂ Saved:** ${ctx.co2Savings?.toLocaleString()} kg\n• **Grid Reality:** Indian grid intensity is ~${ctx.gridCO2Factor} gCO₂/kWh.\n\n**Verdict:** Even with coal-based power, EVs are cleaner because electric motors are ~85-90% efficient vs ICE engines which are only ~20-30% efficient.`;
-    }
-
     // 5. Specific Parameter Explainers
-    if (lowerQuery.includes("subsidy")) {
+    if (/(subsidy|subsidies|incentive)/i.test(lowerQuery)) {
         return `💰 **Subsidy Impact**\n\nCurrent Subsidy: **₹${ctx.evSubsidy.toLocaleString('en-IN')}**\n\nThis directly reduces the "sticker shock" of the EV. Without this subsidy, your break-even period would increase significantly.`;
     }
 
-    if (lowerQuery.includes("petrol")) {
+    if (/(petrol|fuel|gas)/i.test(lowerQuery)) {
         return `⛽ **Petrol Context**\n\nCurrent Price: **₹${ctx.petrolPrice}/L**\n\nPetrol prices are historically volatile. If this price rises, the EV advantage grows even stronger.`;
     }
 
