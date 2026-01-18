@@ -61,7 +61,7 @@ const calculateScenarioImpact = (
   const baseEvPrice = 1800000;
   const evPrice = baseEvPrice * (1 - evPriceReduction / 100);
   const evEfficiency = 7; // km/kWh
-  
+
   // Mix of home (70%) and public (30%) charging
   const avgElectricityCost = electricityRate * 0.7 + chargingCost * 0.3;
   const evFuelCost = (totalKm / evEfficiency) * avgElectricityCost;
@@ -410,9 +410,9 @@ const Scenarios = () => {
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={280}>
-                <AreaChart data={currentResult.yearlyData}>
+                <AreaChart data={currentResult.yearlyData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
                   <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
-                  <XAxis dataKey="year" label={{ value: "Years", position: "bottom" }} />
+                  <XAxis dataKey="year" label={{ value: "Years", position: "insideBottom", offset: -5 }} />
                   <YAxis />
                   <Tooltip
                     contentStyle={{
@@ -439,7 +439,7 @@ const Scenarios = () => {
                     fillOpacity={0.2}
                     strokeWidth={2}
                   />
-                  <Legend />
+                  <Legend verticalAlign="bottom" height={36} />
                 </AreaChart>
               </ResponsiveContainer>
             </CardContent>
@@ -455,11 +455,11 @@ const Scenarios = () => {
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={250}>
-                <BarChart data={sensitivityData}>
+                <BarChart data={sensitivityData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
                   <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
-                  <XAxis dataKey="petrolPrice" label={{ value: "Petrol Price (₹/L)", position: "bottom" }} />
-                  <YAxis yAxisId="left" label={{ value: "Savings (₹L)", angle: -90, position: "left" }} />
-                  <YAxis yAxisId="right" orientation="right" label={{ value: "Break-even (yrs)", angle: 90, position: "right" }} />
+                  <XAxis dataKey="petrolPrice" label={{ value: "Petrol Price (₹/L)", position: "insideBottom", offset: -5 }} />
+                  <YAxis yAxisId="left" label={{ value: "Savings (₹L)", angle: -90, position: "insideLeft" }} />
+                  <YAxis yAxisId="right" orientation="right" label={{ value: "Break-even (yrs)", angle: 90, position: "insideRight" }} />
                   <Tooltip
                     contentStyle={{
                       backgroundColor: "hsl(var(--card))",
@@ -469,7 +469,7 @@ const Scenarios = () => {
                   />
                   <Bar yAxisId="left" dataKey="savings" name="Savings (₹L)" fill="hsl(142, 71%, 45%)" radius={[4, 4, 0, 0]} />
                   <Line yAxisId="right" type="monotone" dataKey="breakEven" name="Break-even (yrs)" stroke="hsl(217, 91%, 60%)" strokeWidth={2} />
-                  <Legend />
+                  <Legend verticalAlign="bottom" height={36} />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
