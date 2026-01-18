@@ -5,34 +5,16 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageCircle, Send, X, Bot, User, Loader2, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { toast } from "sonner";
+import { generateScenarioResponse, ScenarioContext } from "@/lib/scenario-chat";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
 }
 
-interface ScenarioContext {
-  petrolPrice: number;
-  electricityRate: number;
-  chargingCost: number;
-  gridCO2Factor: number;
-  evSubsidy: number;
-  evPriceReduction: number;
-  showGreenGrid: boolean;
-  evTCO?: number;
-  iceTCO?: number;
-  savings?: number;
-  breakEven?: string;
-  co2Savings?: number;
-  evRecommended?: boolean;
-}
-
 interface ScenarioChatbotProps {
   scenarioContext: ScenarioContext;
 }
-
-const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/scenario-chat`;
 
 export const ScenarioChatbot = ({ scenarioContext }: ScenarioChatbotProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,77 +29,6 @@ export const ScenarioChatbot = ({ scenarioContext }: ScenarioChatbotProps) => {
     }
   }, [messages]);
 
-  const streamChat = async (userMessages: Message[]) => {
-    const resp = await fetch(CHAT_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-      },
-      body: JSON.stringify({ messages: userMessages, scenarioContext }),
-    });
-
-    if (!resp.ok) {
-      const errorData = await resp.json().catch(() => ({}));
-      if (resp.status === 429) {
-        throw new Error("Rate limit exceeded. Please wait a moment and try again.");
-      }
-      if (resp.status === 402) {
-        throw new Error("AI credits exhausted. Please add more credits.");
-      }
-      throw new Error(errorData.error || "Failed to get response");
-    }
-
-    if (!resp.body) {
-      throw new Error("No response body");
-    }
-
-    const reader = resp.body.getReader();
-    const decoder = new TextDecoder();
-    let textBuffer = "";
-    let assistantContent = "";
-
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      
-      textBuffer += decoder.decode(value, { stream: true });
-      
-      let newlineIndex: number;
-      while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
-        let line = textBuffer.slice(0, newlineIndex);
-        textBuffer = textBuffer.slice(newlineIndex + 1);
-
-        if (line.endsWith("\r")) line = line.slice(0, -1);
-        if (line.startsWith(":") || line.trim() === "") continue;
-        if (!line.startsWith("data: ")) continue;
-
-        const jsonStr = line.slice(6).trim();
-        if (jsonStr === "[DONE]") break;
-
-        try {
-          const parsed = JSON.parse(jsonStr);
-          const content = parsed.choices?.[0]?.delta?.content as string | undefined;
-          if (content) {
-            assistantContent += content;
-            setMessages((prev) => {
-              const last = prev[prev.length - 1];
-              if (last?.role === "assistant") {
-                return prev.map((m, i) => 
-                  i === prev.length - 1 ? { ...m, content: assistantContent } : m
-                );
-              }
-              return [...prev, { role: "assistant", content: assistantContent }];
-            });
-          }
-        } catch {
-          textBuffer = line + "\n" + textBuffer;
-          break;
-        }
-      }
-    }
-  };
-
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
@@ -127,14 +38,18 @@ export const ScenarioChatbot = ({ scenarioContext }: ScenarioChatbotProps) => {
     setInput("");
     setIsLoading(true);
 
-    try {
-      await streamChat(newMessages);
-    } catch (error) {
-      console.error("Chat error:", error);
-      toast.error(error instanceof Error ? error.message : "Failed to send message");
-    } finally {
+    // Simulate network delay for "thinking" feel
+    setTimeout(() => {
+      const responseText = generateScenarioResponse(userMessage.content, scenarioContext);
+
+      const botMessage: Message = {
+        role: "assistant",
+        content: responseText
+      };
+
+      setMessages((prev) => [...prev, botMessage]);
       setIsLoading(false);
-    }
+    }, 600);
   };
 
   const suggestedQuestions = [
@@ -191,7 +106,7 @@ export const ScenarioChatbot = ({ scenarioContext }: ScenarioChatbotProps) => {
                     <Bot className="h-4 w-4" />
                   </div>
                   <div className="bg-muted rounded-lg rounded-tl-none p-3 text-sm">
-                    Hi! I'm your EV scenario advisor. I can help you understand how your current parameters affect the EV vs ICE decision. What would you like to know?
+                    Hi! I'm your EV scenario advisor. I can help you understand how your current parameters affect the EV vs ICE decision.
                   </div>
                 </div>
                 <div className="space-y-2">
@@ -231,14 +146,15 @@ export const ScenarioChatbot = ({ scenarioContext }: ScenarioChatbotProps) => {
                         "rounded-lg p-3 text-sm max-w-[80%]",
                         msg.role === "user"
                           ? "bg-primary text-primary-foreground rounded-tr-none"
-                          : "bg-muted rounded-tl-none"
+                          : "bg-muted rounded-tl-none",
+                        msg.role === "assistant" && "whitespace-pre-wrap"
                       )}
                     >
                       {msg.content}
                     </div>
                   </div>
                 ))}
-                {isLoading && messages[messages.length - 1]?.role === "user" && (
+                {isLoading && (
                   <div className="flex items-start gap-3">
                     <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
                       <Bot className="h-4 w-4" />
