@@ -430,10 +430,10 @@ const About = () => {
                                     <div className="mt-2">
                                         <p className="font-bold text-lg">Professor Sarthak Narnor</p>
                                         <div className="flex md:justify-end gap-3 mt-1.5">
-                                            <a href="mailto:mentor@example.com" className="text-muted-foreground hover:text-primary transition-colors">
+                                            <a href="mailto:narnorsarthak@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
                                                 <Mail className="h-4 w-4" />
                                             </a>
-                                            <a href="#" className="text-muted-foreground hover:text-[#0077b5] transition-colors">
+                                            <a href="https://www.linkedin.com/in/sarthak-narnor" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-[#0077b5] transition-colors">
                                                 <Linkedin className="h-4 w-4" />
                                             </a>
                                         </div>
