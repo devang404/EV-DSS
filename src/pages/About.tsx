@@ -184,7 +184,7 @@ const About = () => {
             </PageHeader>
 
             <Tabs defaultValue="overview" className="space-y-6">
-                <TabsList className="grid w-full grid-cols-3 max-w-[600px]">
+                <TabsList className="grid w-full grid-cols-4 max-w-[800px]">
                     <TabsTrigger value="overview" className="gap-2"><FileText className="h-4 w-4" /> Overview</TabsTrigger>
                     <TabsTrigger value="architecture" className="gap-2"><Layers className="h-4 w-4" /> Architecture</TabsTrigger>
                     <TabsTrigger value="team" className="gap-2"><Users className="h-4 w-4" /> Team</TabsTrigger>
