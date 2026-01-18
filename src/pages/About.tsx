@@ -48,35 +48,35 @@ const projectObjectives = [
 const teamMembers = [
     {
         name: "Devang Nadkarni",
-        role: "Lead Developer & System Architect",
-        email: "devangnadkarni@example.com", // Placeholder
-        linkedin: "https://linkedin.com/in/devangnadkarni", // Placeholder
+        role: "System Architect Developer",
+        email: "nadkarnidevang@example.com", // Placeholder
+        linkedin: "www.linkedin.com/in/devang-nadkarni-79066a319", // Placeholder
         contribution: "Full stack development, System Architecture design, ML Model integration, and Deployment pipeline.",
-        image: "https://github.com/shadcn.png" // Placeholder avatar
+
     },
     {
-        name: "Team Member 2",
+        name: "Yuvraj Mangutkar",
         role: "Data Scientist / ML Engineer",
-        email: "member2@example.com",
-        linkedin: "#",
+        email: "mangutkaryuvraj@gmail.com",
+        linkedin: "https://www.linkedin.com/in/yuvraj-mangutkar/",
         contribution: "Data collection, Preprocessing, Feature Engineering, and training of K-Means and Regression models.",
-        image: ""
+
     },
     {
-        name: "Team Member 3",
+        name: "Chaitanya Naik",
         role: "Frontend Developer / UI/UX",
-        email: "member3@example.com",
-        linkedin: "#",
+        email: "chaitanya_naik_aids@moderncoe.edu.in",
+        linkedin: "linkedin.com/in/chaitanya-naik-82b44a2b8",
         contribution: "UI Design, Dashboard implementation, and User Experience optimization.",
-        image: ""
+
     },
     {
-        name: "Team Member 4",
+        name: "Manav Konde",
         role: "Research & Documentation",
-        email: "member4@example.com",
-        linkedin: "#",
+        email: "manavkonde01@gmail.com",
+        linkedin: "linkedin.com/in/manav-konde-9b23242b1",
         contribution: "Market research, Literature review, and Requirement analysis.",
-        image: ""
+
     }
 ];
 
