@@ -25,7 +25,9 @@ import {
     Linkedin,
     Target,
     FileText,
-    Users
+    Users,
+    Award,
+    UserCheck
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -389,6 +391,58 @@ const About = () => {
 
                 {/* --- TEAM TAB --- */}
                 <TabsContent value="team">
+                    {/* Program & Mentor Context */}
+                    <Card className="mb-8 border-l-4 border-l-yellow-500 bg-yellow-50/10 dark:bg-yellow-500/5">
+                        <CardContent className="pt-6">
+                            <div className="flex flex-col md:flex-row justify-between gap-6">
+                                <div className="space-y-4">
+                                    <div>
+                                        <h3 className="font-semibold text-lg flex items-center gap-2">
+                                            <Award className="h-5 w-5 text-yellow-600 dark:text-yellow-500" />
+                                            Program Details
+                                        </h3>
+                                        <p className="text-muted-foreground font-medium mt-1">
+                                            Advanced Course on Green Skills and Artificial Intelligence
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <h3 className="text-sm text-foreground/80 mb-2 font-semibold">Organised By</h3>
+                                        <div className="flex flex-wrap gap-4 items-center">
+                                            <Badge variant="secondary" className="px-3 py-1">Edunet Foundations</Badge>
+                                            <Badge variant="secondary" className="px-3 py-1">AICTE</Badge>
+                                            <div className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-slate-950 border rounded-full shadow-sm">
+                                                <img
+                                                    src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e8/Shell_logo.svg/200px-Shell_logo.svg.png"
+                                                    alt="Shell"
+                                                    className="h-5 w-auto"
+                                                />
+                                                <span className="text-xs font-bold text-slate-700 dark:text-slate-200">Shell India Markets Pvt Ltd</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="md:text-right border-t md:border-t-0 md:border-l pt-4 md:pt-0 md:pl-6 border-border flex flex-col justify-center">
+                                    <h3 className="font-semibold text-lg flex items-center md:justify-end gap-2 text-primary">
+                                        <UserCheck className="h-5 w-5" />
+                                        Project Mentor
+                                    </h3>
+                                    <div className="mt-2">
+                                        <p className="font-bold text-lg">Professor Sarthak Narnor</p>
+                                        <div className="flex md:justify-end gap-3 mt-1.5">
+                                            <a href="mailto:mentor@example.com" className="text-muted-foreground hover:text-primary transition-colors">
+                                                <Mail className="h-4 w-4" />
+                                            </a>
+                                            <a href="#" className="text-muted-foreground hover:text-[#0077b5] transition-colors">
+                                                <Linkedin className="h-4 w-4" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+
                     <div className="grid md:grid-cols-2 gap-6">
                         {teamMembers.map((member, i) => (
                             <Card key={i} className="overflow-hidden hover:shadow-lg transition-all duration-300 border-t-4 border-t-primary">
